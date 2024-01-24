@@ -1,9 +1,9 @@
-from mb_agg import *
-from agent_utils import *
+from Utilities.mb_agg import *
+from Utilities.agent_utils import *
 import torch
 import numpy as np
 import argparse
-from Params import configs
+from Utilities.Params import configs
 import time
 
 device = configs.device
@@ -24,7 +24,7 @@ N_MACHINES_N = params.Nn_m
 LOW = configs.low
 HIGH = configs.high
 
-from JSSP_Env import SJSSP
+from Utilities.JSSP_Env import SJSSP
 from PPO_jssp_multiInstances_new import PPO
 env = SJSSP(n_j=N_JOBS_P, n_m=N_MACHINES_P)
 
