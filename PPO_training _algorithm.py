@@ -1,16 +1,16 @@
 import datetime
 
-from mb_agg import *
-from agent_utils import eval_actions
-from agent_utils import select_action
+from Utilities.mb_agg import *
+from Utilities.agent_utils import eval_actions
+from Utilities.agent_utils import select_action
 from models.actor_critic import ActorCritic
 from copy import deepcopy
 import torch
 import time
 import torch.nn as nn
 import numpy as np
-from Params import configs
-from validation import validate
+from Utilities.Params import configs
+from Utilities.validation import validate
 
 device = torch.device(configs.device)
 
@@ -188,10 +188,10 @@ class PPO:
 
 def main():
 
-    from JSSP_Env import SJSSP
+    from Utilities.JSSP_Env import SJSSP
     envs = [SJSSP(n_j=configs.n_j, n_m=configs.n_m) for _ in range(configs.num_envs)]
     
-    from uniform_instance_gen import uni_instance_gen
+    from Utilities.uniform_instance_gen import uni_instance_gen
     data_generator = uni_instance_gen
 
     dataLoaded = np.load('./DataGen/generatedData' + str(configs.n_j) + '_' + str(configs.n_m) + '_Seed' + str(configs.np_seed_validation) + '.npy')
