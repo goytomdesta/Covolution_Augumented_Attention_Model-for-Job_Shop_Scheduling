@@ -25,7 +25,7 @@ LOW = configs.low
 HIGH = configs.high
 
 from Utilities.JSSP_Env import SJSSP
-from PPO_jssp_multiInstances_new import PPO
+from PPO_training_algorithm import PPO
 env = SJSSP(n_j=N_JOBS_P, n_m=N_MACHINES_P)
 
 ppo = PPO(configs.lr, configs.gamma, configs.k_epochs, configs.eps_clip,
