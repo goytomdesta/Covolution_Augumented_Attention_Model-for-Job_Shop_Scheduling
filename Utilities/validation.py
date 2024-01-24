@@ -2,13 +2,13 @@ def validate(vali_set, model):
     N_JOBS = vali_set[0][0].shape[0]
     N_MACHINES = vali_set[0][0].shape[1]
 
-    from JSSP_Env import SJSSP
-    from mb_agg import g_pool_cal
-    from agent_utils import sample_select_action
-    from agent_utils import greedy_select_action
+    from Utilities.JSSP_Env import SJSSP
+    from Utilities.mb_agg import g_pool_cal
+    from Utilities.agent_utils import sample_select_action
+    from Utilities.agent_utils import greedy_select_action
     import numpy as np
     import torch
-    from Params import configs
+    from Utilities.Params import configs
     env = SJSSP(n_j=N_JOBS, n_m=N_MACHINES)
     device = torch.device(configs.device)
     g_pool_step = g_pool_cal(graph_pool_type=configs.graph_pool_type,
@@ -46,11 +46,11 @@ def validate(vali_set, model):
 
 if __name__ == '__main__':
 
-    from uniform_instance_gen import uni_instance_gen
+    from Utilities.uniform_instance_gen import uni_instance_gen
     import numpy as np
     import time
     import argparse
-    from Params import configs
+    from Utilities.Params import configs
 
     parser = argparse.ArgumentParser(description='Arguments for ppo_jssp')
     parser.add_argument('--Pn_j', type=int, default=20, help='Number of jobs of instances to test')
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     N_JOBS_N = params.Nn_j
     N_MACHINES_N = params.Nn_m
 
-    from PPO_jssp_multiInstances import PPO
+    from PPO_training_algorithm import PPO
     import torch
 
     ppo = PPO(configs.lr, configs.gamma, configs.k_epochs, configs.eps_clip,
