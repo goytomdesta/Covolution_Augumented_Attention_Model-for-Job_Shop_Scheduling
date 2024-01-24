@@ -1,4 +1,4 @@
-from Params import configs
+from Utilities.Params import configs
 import numpy as np
 
 
