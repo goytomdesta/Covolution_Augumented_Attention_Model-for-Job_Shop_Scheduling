@@ -1,11 +1,11 @@
 import gym
 import numpy as np
 from gym.utils import EzPickle
-from uniform_instance_gen import override
-from updateEntTimeLB import calEndTimeLB
-from Params import configs
-from permissibleLS import permissibleLeftShift
-from updateAdjMat import getActionNbghs
+from Utilities.uniform_instance_gen import override
+from Utilities.updateEntTimeLB import calEndTimeLB
+from Utilities.Params import configs
+from Utilities.permissibleLS import permissibleLeftShift
+from Utilities.updateAdjMat import getActionNbghs
 
 
 class SJSSP(gym.Env, EzPickle):
