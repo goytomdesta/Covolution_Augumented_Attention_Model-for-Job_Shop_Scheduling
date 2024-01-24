@@ -1,4 +1,4 @@
-# Deep Reinforcement Learning Framework for Job Shop Scheduling
+# RL with Convolution-Augmented Attention and Gate Mechanism for Job Shop Scheduling
 ## Overview
 This repository contains the implementation of our Deep Reinforcement Learning (DRL) framework, presented in our paper "A Deep Reinforcement Learning Framework with Convolution-Augmented Attention and Gate Mechanism for Job Shop Scheduling." Our framework leverages a novel combination of convolution-augmented attention and a gating mechanism to solve the Job Shop Scheduling Problem (JSSP), a complex combinatorial optimization problem.
 
@@ -16,17 +16,17 @@ Moreover, the following figure presents the convolution module's architecture wi
 ![Conv_module](https://github.com/goytomdesta/Covolution_Augumented_Attention_Model-for-Job_Shop_Scheduling/assets/93028395/37a9f3f3-1f47-4636-af49-35658b3d05e8)
 
 ## Requirements
-Python 3.8
-PyTorch
+Python 3.8      
+PyTorch      
 Other dependencies listed in requirements.txt
 
 ## Installation
-git clone https://github.com/goytomdesta
-cd Covolution_Augumented_Attention_Model-for-Job_Shop_Scheduling
+git clone https://github.com/goytomdesta     
+cd Covolution_Augumented_Attention_Model-for-Job_Shop_Scheduling     
 pip install -r requirements.txt
 
 ## Usage
-python main.py --options
+python main.py --options     
 Replace --options with specific command line arguments for training and evaluation.
 
 ## Dataset
