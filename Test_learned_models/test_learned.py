@@ -1,8 +1,8 @@
-from mb_agg import *
-from agent_utils import *
+from Utilities.mb_agg import *
+from Utilities.agent_utils import *
 import torch
 import argparse
-from Params import configs
+from Utilities.Params import configs
 import time
 import numpy as np
 
@@ -28,8 +28,8 @@ N_JOBS_N = params.Nn_j
 N_MACHINES_N = params.Nn_m
 
 
-from JSSP_Env import SJSSP
-from PPO_jssp_multiInstances_new import PPO
+from Utilities.JSSP_Env import SJSSP
+from Utilities.PPO_jssp_multiInstances_new import PPO
 env = SJSSP(n_j=N_JOBS_P, n_m=N_MACHINES_P)
 
 ppo = PPO(configs.lr, configs.gamma, configs.k_epochs, configs.eps_clip,
@@ -57,7 +57,7 @@ g_pool_step = g_pool_cal(graph_pool_type=configs.graph_pool_type,
                          n_nodes=env.number_of_tasks,
                          device=device)
 # 34 41 41 57 40 56 63 35 67 66 45 67 51 68 68 41 67 30 65 64
-from uniform_instance_gen import uni_instance_gen
+from Utilities.uniform_instance_gen import uni_instance_gen
 np.random.seed(SEED)
 
 dataLoaded = np.load('./DataGen/generatedData' + str(N_JOBS_P) + '_' + str(N_MACHINES_P) + '_Seed' + str(SEED) + '.npy')
