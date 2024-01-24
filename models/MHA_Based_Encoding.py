@@ -27,17 +27,6 @@ class MultiHeadAttention(nn.Module):
         self.v = nn.Linear(hidden_dim, hidden_dim, bias=False)
         self.fc = nn.Linear(hidden_dim, hidden_dim, bias=False)
 
-        # Adaptive Attention Mechanism
-        # self.adaptive_attention = nn.Sequential(
-        #     nn.Linear(self.n_nodes, 1),
-        #     nn.Softmax(dim=1)
-        # )
-        #
-        # self.adaptive_attention1 = nn.Sequential(
-        #     nn.Linear(self.n_nodes*self.n_nodes, 1),
-        #     nn.Softmax(dim=1)
-        # )
-
     def forward(self, h):
 
         h = h.reshape(-1, self.hidden_dim)
@@ -53,11 +42,6 @@ class MultiHeadAttention(nn.Module):
         K = K.reshape(n_nodes, -1, self.n_heads)
         compatibility = torch.einsum('ijk,ikl->ijl', Q, K) / (hidden_dim // self.n_heads)* 0.5
 
-        # if h.shape[0] == self.n_nodes:
-        #     adaptive_weights = self.adaptive_attention(compatibility)
-        # else:
-        #     adaptive_weights = self.adaptive_attention1(compatibility)
-
         scores = F.softmax(compatibility, dim=-1)
         # scores = F.softmax(adaptive_weights, dim=1).unsqueeze(-1)   # (batch_size,n_heads,n_nodes)
         # scores = adaptive_weights.unsqueeze(-1)
@@ -67,10 +51,6 @@ class MultiHeadAttention(nn.Module):
         V = V.reshape(n_nodes, -1, self.n_heads)
         out_put = torch.einsum("blh,bdh->bld", scores, V)
         out_put = out_put.transpose(1, 2).contiguous().view(n_nodes, hidden_dim)
-
-        # out_put = torch.matmul(scores, V.view(self.n_heads, n_nodes, -1).unsqueeze(2)).squeeze(2) # (batch_size,n_heads,1,n_nodes )*(batch_size,n_heads,n_nodes,head_dim)
-        # out_put = torch.matmul(scores, V.view(self.n_heads, n_nodes, -1))
-        # out_put = out_put.view(-1, self.hidden_dim)  # （batch_size,n_heads,hidden_dim）
         out_put = self.fc(out_put)
 
         return out_put   # (batch_size,hidden_dim)
@@ -175,85 +155,8 @@ class MultiHeadAttentionLayer(nn.Module):
         r = torch.sigmoid(self.linear_w_r(h_c) + self.linear_u_r(h_attn_out))
         h_hat = torch.tanh(self.linear_w_g(h_c) + self.linear_u_g(r * h_attn_out))  # Note elementwise multiplication of r and x
         h = (1. - z) * h_attn_out + z * h_hat
-
         h = h * torch.sigmoid(h_attn_out)
 
-        # if self.residual:
-        #     h = h_in2 + h
-
-        # if self.batch_norm:
-        #     h = self.batch_norm2_h(h)
-
-        # h = self.FFN_h_layer3(h)
-        # h = F.relu(h)
-        # h = F.dropout(h, self.dropout, training=self.training)
-        # h = self.FFN_h_layer4(h)
-        # h = h_a * torch.sigmoid(h)
         h = self.fc1(h)
 
         return h
-
-# class Conformer(nn.Module):
-#     def __init__(self, hidden_dim, num_heads, n_nodes, input_dim, device, dropout=0.001, batch_norm=True):
-#         super(Conformer, self).__init__()
-#
-#         self.device = device
-#         self.dropout = dropout
-#         self.batch_norm = batch_norm
-#
-#         feed_forward_hidden = 512
-#         # self.conv1d = nn.Conv1d(input_dim, hidden_dim, kernel_size, padding=(kernel_size - 1) // 2)
-#         # self.FC = nn.Linear(hidden_dim, hidden_dim).to(device)
-#         # self.conv1d = nn.Conv1d(in_channels=100, out_channels=hidden_dim, kernel_size=1)
-#         self.conv1d = nn.Conv1d(hidden_dim, hidden_dim, kernel_size = 1)
-#         self.layer_norm = nn.LayerNorm(hidden_dim).to(device)
-#         self.n_nodes = n_nodes
-#
-#         # self.conformer_blocks = nn.ModuleList([
-#         #     MultiHeadAttention(hidden_dim, hidden_dim, num_heads, kernel_size, dropout_rate)
-#         #     for _ in range(num_layers)])
-#
-#         # self.FFN_h_layer1 = nn.Linear(hidden_dim, feed_forward_hidden)
-#         # self.FFN_h_layer2 = nn.Linear(feed_forward_hidden, hidden_dim)
-#         # self.FFN_h_layer3 = nn.Linear(hidden_dim, feed_forward_hidden)
-#         # self.FFN_h_layer4 = nn.Linear(feed_forward_hidden, hidden_dim)
-#
-#         self.conformer_blocks = MultiHeadAttention(hidden_dim, n_nodes, input_dim, num_heads, dropout=0.0)
-#         self.fc = nn.Linear(hidden_dim, hidden_dim).to(device)
-#         self.fc1 = nn.Linear(hidden_dim, hidden_dim).to(device)
-#         if self.batch_norm:
-#             self.batch_norm_h = nn.BatchNorm1d(hidden_dim)
-#
-#     def forward(self, x):
-#         # x = x.permute(0, 2, 1)  # Change the shape to (batch_size, input_dim, sequence_length)
-#
-#         # x = self.fc1(x)
-#         # x = self.layer_norm(x)
-#
-#         # x = self.FFN_h_layer1(x)
-#         # x = F.relu(x)
-#         # x = F.dropout(x, self.dropout, training=self.training)
-#         # x = self.FFN_h_layer2(x)
-#         # x_i = x
-#         # x = self.fc(x)
-#         x = x.unsqueeze(-1)
-#         residual = x
-#         x = self.conv1d(x)
-#         x = x + residual
-#         # for block in self.conformer_blocks:
-#         #     x = block(x)
-#         x = x.squeeze(-1)
-#
-#         x = self.conformer_blocks(x)
-#         # x = F.dropout(x, self.dropout, training=self.training)
-#         if self.batch_norm:
-#             x = self.batch_norm_h(x)
-#
-#         # x = self.FFN_h_layer3(x)
-#         # x = F.relu(x)
-#         # x = F.dropout(x, self.dropout, training=self.training)
-#         # x = self.FFN_h_layer4(x)
-#         # x = x.mean(dim=-1)  # Average pooling over the sequence length
-#         x = self.fc(x)
-#
-#         return x
