@@ -10,10 +10,13 @@ Comprehensive Graph Representations: Captures both local and global dependencies
 
 ## Proposed DRL Framework
 The following figures depict our proposed Deep Reinforcement Learning model leveraging a convolution-augmented attention mechanism and the convolution module's architecture within the framework. The architectures provide details of how convolution layers and attention modules synergistically process scheduling data. 
+
 ![Screenshot](Images/Conv_Aug_Attn.png)
+
 Fig 1: Convolution-augmented attention mechanism 
 
 ![Screenshot](Images/Conv_module.png)
+
 Fig 2: Architecture of Convolution module
 
 ## Requirements
