@@ -1,6 +1,6 @@
 # RL with Convolution-Augmented Attention and Gate Mechanism for Job Shop Scheduling
 ## Overview
-This repository contains the implementation of our Deep Reinforcement Learning (DRL) framework, presented in our paper "A Deep Reinforcement Learning Framework with Convolution-Augmented Attention and Gate Mechanism for Job Shop Scheduling." Our framework leverages a novel combination of convolution-augmented attention and a gating mechanism to solve the Job Shop Scheduling Problem (JSSP), a complex combinatorial optimization problem.
+This repository contains the implementation of a novel Deep Reinforcement Learning (DRL) framework, presented in our paper "A Deep Reinforcement Learning Framework with Convolution-Augmented Attention and Gate Mechanism for Job Shop Scheduling." Our framework leverages a novel combination of convolution-augmented attention and a gating mechanism to solve the Job Shop Scheduling Problem (JSSP), a complex combinatorial optimization problem.
 
 ## Features
 Convolution-Augmented Attention: Enhances local pattern recognition within the JSSP environment.
