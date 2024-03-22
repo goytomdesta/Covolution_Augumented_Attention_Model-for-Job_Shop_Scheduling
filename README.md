@@ -37,4 +37,4 @@ Replace --options with specific command line arguments for training and evaluati
 Experiments were conducted on Taillard’s benchmark dataset. 
 
 ## Contributors
-GOYTOM GEBREYESUS, GETU FELLEK, AHMED FARID, Yi Qiang, SHIGERU FUJIMURA, OSAMU YOSHIE
+Goytom Gebreyesus, Getu Fellek, Ahmed Farid, Yi Qiang, Shigeru Fujimura, Osamu Yoshie
